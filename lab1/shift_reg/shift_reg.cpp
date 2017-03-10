@@ -11,7 +11,7 @@ void shift_reg::shift() {
             data.write((data.read().range(6, 0), in.read()));
         }
         data_out.write(data.read());
-        //out.write;
+        out = (bool)data.read().bit(7);
         cout << "@" << sc_time_stamp() << " :: Have stored " << data_out.read() << endl;
         wait();
     }

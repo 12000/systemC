@@ -86,6 +86,7 @@ int sc_main(int argc, char* argv[])
     sc_start(7, SC_NS);
     areset_n = 1;
 
+    for(int i = 0; i<15; i++) sc_start(5, SC_NS);
     sc_start(10, SC_NS);
     cout << "@" << sc_time_stamp() << " Terminating simulation\n" << endl;
     sc_close_vcd_trace_file(wf);
