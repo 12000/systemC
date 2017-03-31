@@ -3,16 +3,16 @@
 void shift_reg::shift() {
     // We check if reset is active
     data = 0;
-    data_out = 0;
+    dout = 0;
     out = 0;
     wait();
     while (true) {
         if(ena){
-            data.write((data.read().range(6, 0), in.read()));
+            data.write((data.read().range(6, 0), cin.read()));
         }
-        data_out.write(data.read());
+        dout.write(data.read());
         out = (bool)data.read().bit(7);
-        cout << "@" << sc_time_stamp() << " :: Have stored " << data_out.read() << endl;
+        cout << "@" << sc_time_stamp() << " :: Have stored " << dout.read() << endl;
         wait();
     }
 }

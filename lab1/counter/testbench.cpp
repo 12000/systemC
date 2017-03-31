@@ -8,7 +8,7 @@ int sc_main(int argc, char* argv[])
     sc_signal<bool> areset_n;
     sc_signal<bool> load;
     sc_signal<sc_uint<8>> data;
-    sc_signal<sc_uint<8>> cnt_out;
+    sc_signal<sc_uint<8>> dout;
 
     // Connect the DUT
     counter test_counter("test_counter");
@@ -17,7 +17,7 @@ int sc_main(int argc, char* argv[])
     test_counter.areset_n(areset_n);
     test_counter.load(load);
     test_counter.data(data);
-    test_counter.cnt_out(cnt_out);
+    test_counter.dout(dout);
 
     // Open VCD file
     sc_trace_file *wf = sc_create_vcd_trace_file("counter_waveform");
@@ -28,7 +28,7 @@ int sc_main(int argc, char* argv[])
     sc_trace(wf, areset_n, "areset_n");
     sc_trace(wf, load, "load");
     sc_trace(wf, data, "data");
-    sc_trace(wf, cnt_out, "cnt_out");
+    sc_trace(wf, dout, "dout");
 
     //Test code
     data = 0;
@@ -40,9 +40,9 @@ int sc_main(int argc, char* argv[])
     areset_n = 1;
 
     //count check
-    for (int i=0; i<16; i++){
+    for (uint i=0; i<16; i++){
         sc_start(5, SC_NS);
-        assert(cnt_out.read() == i+1);
+        assert(dout.read() == i+1);
     }
 
     //load check
@@ -52,33 +52,33 @@ int sc_main(int argc, char* argv[])
     sc_start(2, SC_NS);
     load = 0;
     sc_start(2, SC_NS);
-    assert(cnt_out.read() == 5);
+    assert(dout.read() == 5);
     sc_start(2, SC_NS); //cnt+1
-    for (int i=0; i<16; i++){
+    for (uint i=0; i<16; i++){
         sc_start(5, SC_NS);
-        assert(cnt_out.read() == i+6);
+        assert(dout.read() == i+6);
     }
 
     //synch reset check
     sc_start(2, SC_NS);
-    int tmp = cnt_out.read();
+    uint tmp = dout.read();
     cout << endl << "tmp = " << tmp << endl;
     reset_n = 0;
     sc_start(1, SC_NS);
-    assert(cnt_out.read() == tmp);
+    assert(dout.read() == tmp);
     sc_start(4, SC_NS);
-    assert(cnt_out.read() == 0);
+    assert(dout.read() == 0);
     sc_start(3, SC_NS);
     reset_n = 1;
 
     //asynch reset check
-    for (int i=0; i<5; i++){
+    for (uint i=0; i<5; i++){
         sc_start(5, SC_NS);
     }
     sc_start(1, SC_NS);
     areset_n = 0;
     sc_start(1, SC_NS);
-    assert(cnt_out.read() == 0);
+    assert(dout.read() == 0);
     sc_start(7, SC_NS);
     areset_n = 1;
 

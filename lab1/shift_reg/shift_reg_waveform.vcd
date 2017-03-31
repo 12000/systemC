@@ -1,5 +1,5 @@
 $date
-     Mar 10, 2017       04:29:30
+     Mar 30, 2017       23:36:54
 $end
 
 $version
@@ -15,8 +15,8 @@ $var wire    1  aaaaa  clock       $end
 $var wire    1  aaaab  reset_n       $end
 $var wire    1  aaaac  areset_n       $end
 $var wire    1  aaaad  ena       $end
-$var wire    1  aaaae  in       $end
-$var wire    8  aaaaf  data_out [7:0]  $end
+$var wire    1  aaaae  cin       $end
+$var wire    8  aaaaf  dout [7:0]  $end
 $var wire    1  aaaag  out       $end
 $upscope $end
 $enddefinitions  $end
